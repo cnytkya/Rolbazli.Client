@@ -1,0 +1,42 @@
+<h1 class="text-3xl font-bold text-center">
+  Role Bazlı Çalışma
+</h1>
+<router-outlet></router-outlet>
+<!--ana container item'ları ekrana göre ortalanmasını sağladık. arka plan rengi verdik-->
+<div class="flex items-center justify-center min-h-screen bg-gray-500">
+  <!--Giriş formu container - arka plan rengi ver - gölgelik ve yuvarlak köşeler kullan-->
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <!-- form başlığı -->
+    <h2 class="text-3xl font-bold mb-6 text-center text-green-800">Giriş Yap</h2>
+    <!-- form elementleri -->
+    <form>
+      <!-- e-posta giriş alanı grubu-->
+      <div class="mb-4">
+        <label class="block text-green-600 font-medium mb-2"  for="email">
+          E-posta
+        </label>
+        <!-- e-posta giriş alanı -->
+        <input class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"  type = "email"/>
+      </div>
+      <div class="mb-4">
+        <label class="block text-green-600 font-medium mb-2" for="password">
+          Şifre
+        </label>
+        <!-- şifre giriş alanı -->
+        <input class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="password"/>
+      </div>
+      <!-- beni hatırla checbox grubu-->
+      <div class="flex items-center mb-2">
+        <!-- checbox input -->
+         <input type="checkbox" class="mr-2">
+         <label class="text-sm text-gray-700 ml-2 ">Beni hatırla</label>
+      </div>
+      <!-- gönder butonu -->
+      <div >
+        <button class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700" type="submit">
+          Giriş Yap
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
