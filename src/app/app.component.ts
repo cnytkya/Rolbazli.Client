@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./components/clients/navbar/navbar.component";
+import { NavbarComponent } from "./components/clients/layout/navbar/navbar.component";
 import { CommonModule} from '@angular/common';
 
 @Component({

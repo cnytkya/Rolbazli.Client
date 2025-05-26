@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ReactiveFormsModule,FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   ngSubmit(){
     this.authService.login(this.form.value).subscribe((response)=>{
-      console.log(response);
+      console.log("Giriş Başarılı",response);
     })
   }
 }
