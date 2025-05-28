@@ -5,19 +5,19 @@ import { CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent,CommonModule],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  showNavbar = true;
+  title = 'Rolbazli.Client';
 
-  constructor(private router: Router) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Login ve register sayfalarında navbar'ı gizle
-        this.showNavbar = !['/login', '/register'].includes(event.url);
-      }
-    });
-  }
+  // constructor(private router: Router) {
+  //   this.router.events.subscribe((event) => {
+  //     if (event instanceof NavigationEnd) {
+  //       // Login ve register sayfalarında navbar'ı gizle
+  //       this.showNavbar = !['/login', '/register'].includes(event.url);
+  //     }
+  //   });
+  // }
 }
