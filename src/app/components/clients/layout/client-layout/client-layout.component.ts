@@ -7,9 +7,9 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet,NavbarComponent],
   // templateUrl: './client-layout.component.html',
   template: `
-  <app-navbar></app-navbar>
+  <app-navbar/>
   <main class="container mx-auto px-4 py-8">
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </main>`,
   // styleUrls: ['./client-layout.component.scss'],
   styleUrl: './client-layout.component.scss'

@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/clients/pages/home/home.component';
-import { RegisterComponent } from './components/admin/pages/register/register.component';
-import { LoginComponent } from './components/admin/pages/login/login.component';
 
 export const routes: Routes = [
     //Client(public) Layout
@@ -45,8 +42,8 @@ export const routes: Routes = [
                 loadComponent: () => import('./components/admin/pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
             }// Diğer admin sayfaları buraya eklenecek.
         ]    
-    },
-    {
-        // Eğer tanımlanmamış bir rota varsa, 404 sayfasına yönlendir.
     }
+    // {
+    //     // Eğer tanımlanmamış bir rota varsa, 404 sayfasına yönlendir.
+    // }
 ];
