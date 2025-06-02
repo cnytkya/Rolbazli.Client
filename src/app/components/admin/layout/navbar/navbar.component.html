@@ -1,1 +1,49 @@
-<p>navbar works!</p>
+<header class="bg-white shadow-sm z-10">
+  <div class="px-4 py-3 flex items-center justify-between">
+    <!-- Left: Search bar -->
+    <div class="flex items-center space-x-4">
+      <button class="md:hidden text-gray-500 hover:text-gray-700" (click)="toggleSidebar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="relative hidden md:block">
+        <input type="text" placeholder="Search..."
+          class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <mat-icon class="text-gray-400 absolute left-3 top-2.5">search</mat-icon>
+      </div>
+    </div>
+
+    <!-- Right: User menu -->
+    <div class="flex items-center space-x-4">
+      <button class="text-gray-500 hover:text-gray-700 relative">
+        <mat-icon>notifications</mat-icon>
+        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+      </button>
+      <div>
+        <div class="relative" (click)="toggleUserDropdown()">
+          <div class="flex items-center space-x-2 cursor-pointer">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User"
+              class="w-8 h-8 rounded-full border-2 border-blue-500">
+            <span class="hidden md:inline text-gray-700">buraya kullanıcı email</span>
+            <mat-icon class="text-gray-500">arrow_drop_down</mat-icon>
+          </div>
+
+          <!-- User dropdown -->
+          <div *ngIf="showUserDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">account_circle</mat-icon>
+              buraya kullanıcı adı
+            </a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">verified_user</mat-icon>
+              buraya role bilgisi
+            </a>
+            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center">
+              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">logout</mat-icon>
+              Çıkış Yap
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
