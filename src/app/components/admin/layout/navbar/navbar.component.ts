@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule,MatSnackBarModule,MatIconModule],
+  imports: [MatSnackBarModule,MatIconModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -19,7 +19,10 @@ export class NavbarComponent {
 
   constructor( ){}
   
-  
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
   toggleUserDropdown(): void {
     this.showUserDropdown = !this.showUserDropdown;
   }

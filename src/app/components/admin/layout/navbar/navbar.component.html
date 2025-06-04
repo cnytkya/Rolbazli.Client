@@ -1,3 +1,4 @@
+@if(isLoggedIn()) {
 <header class="bg-white shadow-sm z-10">
   <div class="px-4 py-3 flex items-center justify-between">
     <!-- Left: Search bar -->
@@ -18,12 +19,12 @@
         <mat-icon>notifications</mat-icon>
         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
       </button>
-      <div>
+      <div *ngIf="authService.getUserdetails() as userDetail">
         <div class="relative" (click)="toggleUserDropdown()">
           <div class="flex items-center space-x-2 cursor-pointer">
             <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User"
               class="w-8 h-8 rounded-full border-2 border-blue-500">
-            <span class="hidden md:inline text-gray-700">buraya kullanıcı email</span>
+            <span class="hidden md:inline text-gray-700">{{userDetail.email}}</span>
             <mat-icon class="text-gray-500">arrow_drop_down</mat-icon>
           </div>
 
@@ -31,11 +32,11 @@
           <div *ngIf="showUserDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
               <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">account_circle</mat-icon>
-              buraya kullanıcı adı
+              {{userDetail.fullName}}
             </a>
             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
               <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">verified_user</mat-icon>
-              buraya role bilgisi
+              {{userDetail.roles}}
             </a>
             <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center">
               <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">logout</mat-icon>
@@ -47,3 +48,4 @@
     </div>
   </div>
 </header>
+}
