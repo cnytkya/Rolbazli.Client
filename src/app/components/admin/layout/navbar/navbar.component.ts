@@ -23,6 +23,15 @@ export class NavbarComponent {
     return this.authService.isLoggedIn();
   }
 
+  logout(): void{
+    this.authService.logout();
+    this.matSnackbar.open('Çıkış Yapıldı', 'Kapat',{
+      duration: 3000, // 3 saniye boyunca gösterilecek
+      horizontalPosition: 'center',
+    })
+    this.router.navigate(['/auth/login']); // Kullanıcıyı login sayfasına yönlendirir.
+  }
+
   toggleUserDropdown(): void {
     this.showUserDropdown = !this.showUserDropdown;
   }

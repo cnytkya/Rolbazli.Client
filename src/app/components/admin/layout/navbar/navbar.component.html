@@ -1,50 +1,58 @@
-@if(isLoggedIn()) {
+@if (isLoggedIn()) {
 <header class="bg-white shadow-sm z-10">
   <div class="px-4 py-3 flex items-center justify-between">
     <!-- Left: Search bar -->
     <div class="flex items-center space-x-4">
       <button class="md:hidden text-gray-500 hover:text-gray-700" (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
       <div class="relative hidden md:block">
         <input type="text" placeholder="Search..."
           class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-        <mat-icon class="text-gray-400 absolute left-3 top-2.5">search</mat-icon>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
       </div>
     </div>
 
     <!-- Right: User menu -->
     <div class="flex items-center space-x-4">
       <button class="text-gray-500 hover:text-gray-700 relative">
-        <mat-icon>notifications</mat-icon>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
       </button>
-      <div *ngIf="authService.getUserdetails() as userDetail">
+      <div *ngIf="authService.getUserDetails() as userDetail">
         <div class="relative" (click)="toggleUserDropdown()">
           <div class="flex items-center space-x-2 cursor-pointer">
             <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User"
               class="w-8 h-8 rounded-full border-2 border-blue-500">
-            <span class="hidden md:inline text-gray-700">{{userDetail.email}}</span>
-            <mat-icon class="text-gray-500">arrow_drop_down</mat-icon>
+            <span class="hidden md:inline text-gray-700">{{userDetail?.email}}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
           </div>
 
           <!-- User dropdown -->
           <div *ngIf="showUserDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">account_circle</mat-icon>
-              {{userDetail.fullName}}
-            </a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">verified_user</mat-icon>
-              {{userDetail.roles}}
-            </a>
-            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer flex items-center">
-              <mat-icon class="mr-2 text-gray-500" style="font-size: 20px;">logout</mat-icon>
-              Çıkış Yap
-            </a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Name: {{userDetail.fullName}}</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Role: {{userDetail?.roles}}</a>
+            <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Çıkış
+              Yap</a>
+
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </header>

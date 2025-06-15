@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ReactiveFormsModule,FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { error } from 'console';
 
 @Component({
   selector: 'app-login',
@@ -14,38 +14,38 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   authService = inject(AuthService);
   _snackBar = inject(MatSnackBar);
-  router = inject(Router)
+  router = inject(Router);//kullanıcıyı yönlendirmek için Router kullanılır
   hide = true;
   form!:FormGroup;
-  // fb = Inject(FormBuilder);
+  fb = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {}
-
+  userLogin(){
+    this.authService.login(this.form.value).subscribe({
+      next: (res) => {
+        this._snackBar.open(res.message, 'Kapat', {
+          duration: 5000,
+          horizontalPosition: 'center', // Snackbar'ın yatay konumu
+        })
+        if (res.isSuccess) {
+          this.router.navigate(['/admin/dashboard']);
+          console.log('Giriş başarılı:', res);
+        }else{
+          this.router.navigate(['/']);
+        }
+      },
+      error:(error) => {
+          this._snackBar.open(error.error.message, 'Kapat', {
+            duration: 5000,
+            horizontalPosition: 'right', // Snackbar'ın yatay konumu
+          })
+        }
+    });
+  }
   ngOnInit(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['',[Validators.required, Validators.minLength(6)]]
     });
   }
-
-  ngSubmit(){
-    this.authService.login(this.form.value).subscribe({
-      next:(res) => {
-        this._snackBar.open('Giriş Başarılı', 'Kapat', {
-          duration: 3000,
-          horizontalPosition: 'center',
-        })
-        if(res.isSuccess){
-          this.router.navigate(['/admin/dashboard']);
-          console.log("Giriş Başarılı",res);
-        }
-      },
-      error: (err) =>{
-        this._snackBar.open('Giriş Başarısız', 'Kapat', {
-          duration: 3000,
-          horizontalPosition: 'center',
-        })
-      }
-    })
-  }
+  
 }

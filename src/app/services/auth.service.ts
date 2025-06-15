@@ -1,71 +1,72 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 import { LoginRequest } from '../interfaces/login-request';
-import { LoginResponse } from '../interfaces/login-response';
+import { map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from "jwt-decode";
+import { LoginResponse } from '../interfaces/login-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  apiURL:string = environment.apiUrl;
-  private tokenKey = 'token'; //LocalStorage key for the token.
+  //apiUrl = 'http://localhost:5000/api/';
+  apiURL: string = environment.apiUrl;
+  private tokenKey = 'token';// LocalStorage token key
+
   constructor(
-    private http: HttpClient
+    private httpClient: HttpClient
   ) { }
-
-  login(data: LoginRequest): Observable<LoginResponse>{
-    return this.http
-    .post<LoginResponse>(`${this.apiURL}/account/login`, data)
-    .pipe(
-      map((response) => {
-        if(response.isSuccess){
-          // Store the token in local storage
-          localStorage.setItem(this.tokenKey, response.token);
-        }
-        return response;
-      })
-    );
+  //oturum açma işlevini uyguluyoruz.
+  login(data: LoginRequest): Observable<LoginResponse> {
+    return this.httpClient
+      .post<LoginResponse>(`${this.apiURL}account/login`, data)
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            localStorage.setItem(this.tokenKey, response.token);
+          }
+          return response;
+        })
+      );
   }
 
-  getUserdetails(){
-    const token = this.getToken();
-    if (!token) return null; // If no token is found, return null.
-    const decodedToken:any = jwtDecode(token); // Decode the token to get user details.
+  isLoggedIn = (): boolean => {
+    const token = this.getToken();                 // Local storage'dan token'ı alır.
+    if (!token) return false;                      // Token yoksa, kullanıcı giriş yapmamıştır.
+    return !this.isTokenExpired();                 // Token varsa, süresi dolmamışsa true döner.
+  };
+
+  //kullanıcı detaylarını getirme
+  getUserDetails = () => {
+    //kullanıcı bigilerini token i decode ederek alır.
+    const token = this.getToken();                 // Local storage'dan token'ı alır.
+    if (!token) return null;                       // Token yoksa, kullanıcı bilgisi de yoktur.
+    const decodToken:any = jwtDecode(token); // Token'ı decode eder.
     const userDetails = {
-      id: decodedToken.nameid, // Extract user ID from the token.
-      fullName:decodedToken.name,
-      email: decodedToken.email, // Extract user email from the token.
-      roles:decodedToken.role || [], // Extract user roles from the token, defaulting to an empty array if not present.
+      id: decodToken.nameid,                       // Token'dan kullanıcı ID'sini alır.
+      fullName: decodToken.name,              // Token'dan kullanıcı adını alır.
+      email: decodToken.email,                     // Token'dan kullanıcı e-posta adresini alır.
+      roles: decodToken.role || [],                      // token'dan kullanıcı rollerini alır. [ boş ise boş dizi döner.]
     }
-    return userDetails; // Return the user details object.
+    return userDetails;                           // Kullanıcı bilgilerini döner.
   }
 
-  isLoggedIn = (): boolean =>{
-    const token = this.getToken();
-    if(!token) return false; // If no token is found, user is not logged in.
-    const decoded = jwtDecode(token); // Decode the token to check its validity.
-    return !this.isTokenExpired(); // Check if the token is expired.
+  private isTokenExpired() {
+    const token = this.getToken();                 // Token'ı al.
+    if (!token) return true;                       // Token yoksa, süresi dolmuş gibi kabul et.
+
+    const decoded = jwtDecode(token);              // JWT token'ı decode ederek içeriğini al.
+    const isTokenExpired = Date.now() > decoded['exp']! * 1000; // Şu anki zaman, token'ın 'exp' süresini geçmiş mi?
+
+    if (isTokenExpired) this.logout();             // Token süresi dolmuşsa, kullanıcıyı çıkış yaptır.
+    return isTokenExpired;                         // Süresi dolmuşsa true, geçerli ise false döner.
   }
 
-  private isTokenExpired(){
-    const token = this.getToken();
-    if (!token) return true; // If no token is found, consider it expired.
-
-    const decoded = jwtDecode(token)
-    const isTokenExpired = Date.now() > decoded['exp']! * 1000; // Check if the current time is greater than the token's expiration time.
-    if (isTokenExpired) {
-      this.logout(); // If the token is expired, log the user out.
-    }
-    return isTokenExpired; // Return whether the token is expired.
-  }
-
-  logout = (): void =>{
-    localStorage.removeItem(this.tokenKey); // Remove the token from local storage
-  }
-  private getToken = ():string | null =>{
-    return localStorage.getItem(this.tokenKey) || ''; // Retrieve the token from local storage
-  }
+  
+  logout = (): void => {
+    localStorage.removeItem(this.tokenKey);        // localStorage'dan token'ı sil.
+  };
+  private getToken = (): string | null => 
+    localStorage.getItem(this.tokenKey) || '';// Local storage'dan token'ı alır.
 }

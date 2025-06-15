@@ -1,87 +1,99 @@
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-indigo-200">
-  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
-  </div>
-
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" [formGroup]="form" (ngSubmit)="ngSubmit()">
-      <!-- Email -->
-      <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-        <div class="mt-2">
-          <input id="email" name="email" formControlName="email" type="email" autocomplete="email"  required
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3">
-        </div>
+<div class="bg-gray-50 min-h-screen">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm text-center">
+      <!-- Added user icon to the title -->
+      <div class="flex justify-center">
+        <span class="material-icons text-indigo-600" style="font-size: 3rem;">account_circle</span>
       </div>
-
-      <!-- Password -->
-      <div>
-        <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-          <div class="text-sm">
-            <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-          </div>
-        </div>
-        <div class="mt-2 relative">
-          <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <span class="material-icons text-gray-400">lock</span>
-          </div> -->
-          <input id="password" name="password" formControlName="password" type="{{hide ? 'password' : 'text'}}"  autocomplete="current-password"
-            required
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 pr-10" >
-          <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" (click)="hide = !hide">
-            <span id="eye-icon" class="material-icons text-gray-400">{{hide ? 'visibility_off' : 'visibility'}}</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Remember Me -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-          <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
-        </div>
-      </div>
-
-      <!-- Sign In Button -->
-      <div>
-        <button type="submit" [disabled]="!form.valid"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          <span class="material-icons mr-2">login</span>
-          Login
-        </button>
-      </div>
-    </form>
-
-    <div class="mt-10">
-      <div class="relative">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-gray-200"></div>
-        </div>
-        <div class="relative flex justify-center text-sm font-medium leading-6">
-          <span class="bg-gray-50 px-6 text-gray-900">Or continue with</span>
-        </div>
-      </div>
-
-      <div class="mt-6 grid grid-cols-2 gap-4">
-        <a href="#"
-          class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          <span class="material-icons">code</span>
-          <span>GitHub</span>
-        </a>
-
-        <a href="#"
-          class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          <span class="material-icons">mail</span>
-          <span>Google</span>
-        </a>
-      </div>
+      <h2 class="mt-4 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
     </div>
 
-    <p class="mt-10 text-center text-sm text-gray-500">
-      Don't have an account?
-      <a routerLink="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register now</a>
-    </p>
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-6" [formGroup]="form" (ngSubmit)="userLogin()">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+          <div class="mt-2 relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-icons text-gray-400">mail</span>
+            </div>
+            <input id="email" name="email" formControlName = "email" type="email" autocomplete="email" required 
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-10 pr-3">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+            <div class="text-sm">
+              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500 flex items-center">
+                <span class="material-icons text-base mr-1">help_outline</span>
+                Forgot password?
+              </a>
+            </div>
+          </div>
+          <div class="mt-2 relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="material-icons text-gray-400">lock</span>
+            </div>
+            <input id="password" name="password" type="{{hide ? 'password' : 'text'}}" formControlName = "password" autocomplete="current-password" required 
+                   class="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-10 pr-10">
+            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" (click)="hide = !hide">
+              <span id="eye-icon" class="material-icons text-gray-400">{{hide ? 'visibility_off': 'visibility'}}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input id="remember-me" name="remember-me" type="checkbox" 
+                   class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+          </div>
+        </div>
+
+        <!-- Sign In Button - Added icon -->
+        <div>
+          <button type="submit" [disabled]="!form.valid"
+                  class="flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500">
+            <span class="material-icons mr-2">login</span>
+            Sign in
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-10">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-200"></div>
+          </div>
+          <div class="relative flex justify-center text-sm font-medium leading-6">
+            <span class="bg-gray-50 px-6 text-gray-900">Or continue with</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            <span class="material-icons">code</span>
+            <span>GitHub</span>
+          </a>
+
+          <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            <span class="material-icons">mail</span>
+            <span>Google</span>
+          </a>
+        </div>
+      </div>
+
+      <p class="mt-10 text-center text-sm text-gray-500">
+        Don't have an account?
+        <a routerLink="/auth/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 flex items-center justify-center">
+          <span class="material-icons text-base mr-1">person_add</span>
+          Register now
+        </a>
+      </p>
+    </div>
   </div>
 </div>
