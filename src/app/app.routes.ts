@@ -1,49 +1,77 @@
-import { Routes } from '@angular/router';
+import { Routes } from '@angular/router'; // Angular Router'dan Routes tipini içe aktarır
 
-export const routes: Routes = [
-    //Client(public) Layout
+export const routes: Routes = [ // Uygulamanın tüm rotalarını tanımlayan sabit bir Routes dizisi
+    // Client (Public) Layout - Müşteriye açık, genel sayfaların düzeni
     {
-        path: '',
+        path: '', // Kök yol (uygulamanın ana adresi)
+        // ClientLayoutComponent'i dinamik olarak yükler (lazy loading)
         loadComponent: () => import('./components/clients/layout/client-layout/client-layout.component').then(m => m.ClientLayoutComponent),
-        children:[
+        children: [ // Bu düzenin içinde gösterilecek alt rotalar
             {
-                path: '',loadComponent: () => import('./components/clients/pages/home/home.component').then(m => m.HomeComponent)
+                path: '', // client-layout içinde boş yol, yani /
+                // HomeComponent'i dinamik olarak yükler
+                loadComponent: () => import('./components/clients/pages/home/home.component').then(m => m.HomeComponent)
             },
             {
-                path:'home',redirectTo: ''
+                path: 'home', // /home yolu
+                redirectTo: '' // Boş yola yönlendirir, böylece / ve /home aynı sayfayı gösterir
             }
         ]
     },
-    //Auth(public) Routes - Login and Register
+    // Auth (Public) Routes - Giriş ve Kayıt sayfalarının düzeni (kimlik doğrulaması gerektirmez)
     {
-        path: 'auth',
+        path: 'auth', // /auth yolu
+        // AuthLayoutComponent'i dinamik olarak yükler
         loadComponent: () => import('./components/auth/auth-layout/auth-layout.component').then(m => m.AuthLayoutComponent),
-        children: [
+        children: [ // Bu düzenin içinde gösterilecek alt rotalar
             {
-                path: 'login', loadComponent: () => import('./components/admin/pages/login/login.component').then(m => m.LoginComponent), title: 'Giriş Yap'
-            }, 
-            {
-                path: 'register', loadComponent: () => import('./components/admin/pages/register/register.component').then(m => m.RegisterComponent), title: 'Kayıt Ol'
+                path: 'login', // /auth/login yolu
+                // LoginComponent'i dinamik olarak yükler ve tarayıcı sekmesi başlığını 'Giriş Yap' olarak ayarlar
+                loadComponent: () => import('./components/admin/pages/login/login.component').then(m => m.LoginComponent), title: 'Giriş Yap'
             },
             {
-                path: '', redirectTo: 'login', pathMatch: 'full'
+                path: 'register', // /auth/register yolu
+                // RegisterComponent'i dinamik olarak yükler ve tarayıcı sekmesi başlığını 'Kayıt Ol' olarak ayarlar
+                loadComponent: () => import('./components/admin/pages/register/register.component').then(m => m.RegisterComponent), title: 'Kayıt Ol'
+            },
+            {
+                path: '', // /auth içinde boş yol
+                redirectTo: 'login', // auth düzenine direkt erişilirse login sayfasına yönlendirir
+                pathMatch: 'full' // Yolun tamamen eşleşmesini sağlar
             }
         ]
     },
-    //Admin(private) Routes: Kullanıcı eğer giriş yapmışsa ve admin ise bu sayfaları görebilsin. Burda AuthGuard kullanılabilir.
+    // Admin (Private) Routes: Yönetici paneli sayfaları.
+    // Kullanıcı giriş yapmışsa ve admin yetkisi varsa bu sayfalara erişebilir.
     {
-        path: 'admin',
+        path: 'admin', // /admin yolu
+        // AdminLayoutComponent'i dinamik olarak yükler
         loadComponent: () => import('./components/admin/layout/admin-layout/admin-layout.component').then(m => m.AdminLayoutComponent),
-        //Burda AuthGuard kullanılacak ve aşağıdaki children'lar sadece admin yetkisi olan kullanıcılar tarafından görülebilecek.
-        children: [
-            {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+        //canActivate: [AuthGuard], // AuthGuard'ı bu rotayı ve tüm alt rotalarını korumak için kullanır
+        children: [ // Bu düzenin içinde gösterilecek alt rotalar
+            {path: '', redirectTo: 'dashboard', pathMatch: 'full'}, // /admin yoluna erişilirse /admin/dashboard'a yönlendirir
             {
-                path:'dashboard',
+                path:'dashboard', // /admin/dashboard yolu
+                // DashboardComponent'i dinamik olarak yükler
                 loadComponent: () => import('./components/admin/pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
-            }// Diğer admin sayfaları buraya eklenecek.
-        ]    
+            },
+            {
+                path: 'users', 
+                // UserListComponent'i dinamik olarak yükler ve tarayıcı sekmesi başlığını 'Kullanıcılar' olarak ayarlar
+                loadComponent: () => import('./components/admin/pages/user-list/user-list.component').then(m => m.UserListComponent), title: 'Users'
+            },
+            {
+                path: 'roles',
+                loadComponent: () => import('./components/admin/pages/role-list/role-list.component').then(m => m.RoleListComponent), title: 'Rol Yönetimi'
+            }
+            // Diğer admin sayfaları buraya eklenecek.
+        ]
+    },
+    // Tanımlanmamış rotalar için genel yönlendirme
+    {
+        path: '**', // Uygulamada tanımlanmayan tüm diğer yolları yakalar
+        redirectTo: 'auth/login' // Varsayılan olarak giriş sayfasına yönlendirir
+        // Alternatif olarak, özel bir 404 sayfasına da yönlendirebilirsiniz:
+        // loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent)
     }
-    // {
-    //     // Eğer tanımlanmamış bir rota varsa, 404 sayfasına yönlendir.
-    // }
 ];

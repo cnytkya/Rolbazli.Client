@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { LoginRequest } from '../interfaces/login-request';
 import { map, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { jwtDecode } from "jwt-decode";
 import { LoginResponse } from '../interfaces/login-response';
+import { UserDetail } from '../interfaces/user-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class AuthService {
     //kullanıcı bigilerini token i decode ederek alır.
     const token = this.getToken();                 // Local storage'dan token'ı alır.
     if (!token) return null;                       // Token yoksa, kullanıcı bilgisi de yoktur.
-    const decodToken:any = jwtDecode(token); // Token'ı decode eder.
+    const decodToken: any = jwtDecode(token); // Token'ı decode eder.
     const userDetails = {
       id: decodToken.nameid,                       // Token'dan kullanıcı ID'sini alır.
       fullName: decodToken.name,              // Token'dan kullanıcı adını alır.
@@ -63,10 +64,34 @@ export class AuthService {
     return isTokenExpired;                         // Süresi dolmuşsa true, geçerli ise false döner.
   }
 
-  
+
   logout = (): void => {
     localStorage.removeItem(this.tokenKey);        // localStorage'dan token'ı sil.
   };
-  private getToken = (): string | null => 
+  private getToken = (): string | null =>
     localStorage.getItem(this.tokenKey) || '';// Local storage'dan token'ı alır.
+
+
+  getAllUsers(): Observable<UserDetail[]> { // UserDetail nesnelerinin bir dizisini döndüren bir Observable tanımlar.
+    const token = this.getToken(); // localStorage'dan JWT token'ı alır.
+    if (!token) { // Eğer token yoksa (kullanıcı giriş yapmamışsa)
+      // Token eksikse durumu ele alın (örneğin, giriş sayfasına yönlendirme veya hata fırlatma)
+      return new Observable(observer => { // Yeni bir Observable oluşturulur.
+        observer.error('Kimlik doğrulama tokenı bulunamadı.'); // Observable'a bir hata gönderilir.
+        observer.complete(); // Observable tamamlanır.
+      });
+    }
+
+    // Yetkilendirme başlığını (Authorization header) Bearer token ile ayarla.
+    const headers = new HttpHeaders({ // Yeni bir HTTP başlıkları nesnesi oluşturulur.
+      'Authorization': `Bearer ${token}` // 'Authorization' başlığına 'Bearer [token]' değeri eklenir.
+    });
+
+    // Backend API endpoint'ine GET isteği yap.
+    // httpClient.get metodu ile belirtilen URL'ye HTTP GET isteği gönderilir.
+    // <UserDetail[]> tipini belirterek dönen verinin UserDetail dizisi olacağını TypeScript'e bildiririz.
+    // { headers } seçeneği ile oluşturduğumuz Authorization başlığını isteğe ekleriz.
+    return this.httpClient.get<UserDetail[]>(`${this.apiURL}account/get-users`, { headers });
+  }
+
 }

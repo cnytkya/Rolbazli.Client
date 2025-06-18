@@ -1,0 +1,46 @@
+<div class="p-4 sm:p-6 md:p-8 bg-gray-100 min-h-screen"> <!-- Sayfanın ana kapsayıcısı, duyarlı dolgu ve arka plan rengi -->
+  <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-6 sm:p-8"> <!-- İçerik kapsayıcısı, maksimum genişlik, otomatik yatay ortalama, yuvarlak köşeler ve gölge -->
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Kullanıcı Listesi</h2> <!-- Sayfa başlığı, metin boyutu, kalınlık, renk, alt boşluk ve ortalama -->
+
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <!-- Hata mesajı gösterilecek alan (errorMessage varsa görünür) -->
+      <strong class="font-bold">Hata!</strong> <!-- Kalın metinle hata uyarısı -->
+      <span class="block sm:inline ml-2">{{ errorMessage }}</span> <!-- Hata mesajının kendisi -->
+    </div>
+
+    <div *ngIf="users.length > 0; else noUsers" class="overflow-x-auto relative shadow-md sm:rounded-lg">
+      <!-- Kullanıcılar varsa tabloyu, yoksa 'noUsers' şablonunu gösterir -->
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400"> <!-- Tam genişlikte, küçük metinli, sola hizalı tablo -->
+        <thead class="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
+          <!-- Tablo başlığı, küçük metinli, büyük harfli, arka plan rengi -->
+          <tr> <!-- Başlık satırı -->
+            <th scope="col" class="py-3 px-6">ID</th> <!-- ID sütun başlığı -->
+            <th scope="col" class="py-3 px-6">Tam Ad</th> <!-- Tam Ad sütun başlığı -->
+            <th scope="col" class="py-3 px-6">E-posta</th> <!-- E-posta sütun başlığı -->
+            <th scope="col" class="py-3 px-6">Roller</th> <!-- Roller sütun başlığı -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Tablo gövdesi -->
+          <tr *ngFor="let user of users" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <!-- Her bir kullanıcı için döngü, arka plan, alt çizgi ve hover efekti -->
+            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.id }}</td> <!-- Kullanıcı ID'si -->
+            <td class="py-4 px-6">{{ user.fullName }}</td> <!-- Kullanıcı Tam Adı -->
+            <td class="py-4 px-6">{{ user.email }}</td> <!-- Kullanıcı E-postası -->
+            <td class="py-4 px-6">
+              <!-- Roller sütunu -->
+              <span *ngFor="let role of user.roles" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-1">
+                <!-- Her bir rol için küçük, yuvarlak etiketler -->
+                {{ role }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noUsers>
+      <!-- Kullanıcı bulunmadığında gösterilecek mesaj -->
+      <p class="text-center text-gray-600 py-8">Kullanıcı bulunamadı.</p> <!-- Ortalanmış, gri metin -->
+    </ng-template>
+  </div>
+</div>

@@ -1,24 +1,33 @@
-<aside class="w-64 bg-gray-700 text-white flex flex-col h-full shadow-lg">
-  <div class="p-6 border-b border-orange-600">
-    <h1 class="text-3xl font-semibold text-center text-white">Admin Paneli</h1>
+<!-- src/app/components/sidebar/sidebar.component.html -->
+
+<aside class="w-64 bg-gray-700 text-white flex flex-col h-full shadow-lg"> <!-- Kenar çubuğunun ana kapsayıcısı, genişlik, arka plan rengi ve gölge ayarları -->
+  <div class="p-6 border-b border-orange-600"> <!-- Başlık bölümü, iç boşluk, alt çizgi ve renk ayarları -->
+    <h1 class="text-3xl font-semibold text-center text-white">Admin Paneli</h1> <!-- Panel başlığı, metin boyutu, kalınlık ve hizalama -->
   </div>
 
-  <nav class="flex-1 px-4 py-6 space-y-2">
-    <a href="/home" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l7 7m-15 0v5a1 1 0 001 1h3m-6 0h6"></path></svg>
-      <span>Anasayfa</span>
+  <nav class="flex-1 px-4 py-6 space-y-2"> <!-- Navigasyon menüsü, esnek büyüme, iç boşluk ve öğeler arası boşluk -->
+    <a routerLink="/home" routerLinkActive="bg-orange-600 text-white" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
+      <!-- Anasayfa bağlantısı:
+           - routerLink="/home": Tıklandığında '/home' yoluna yönlendirir.
+           - routerLinkActive="bg-orange-600 text-white": Bağlantı aktifse belirtilen CSS sınıflarını uygular.
+           - class: Esnek düzen, hizalama, iç boşluk, yuvarlatılmış köşeler, metin rengi ve hover efektleri. -->
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l7 7m-15 0v5a1 1 0 001 1h3m-6 0h6"></path></svg> <!-- Anasayfa ikonu -->
+      <span>Dashboard</span> <!-- Bağlantı metni -->
     </a>
-    <a href="#" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.102-1.282-.294-1.859M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.102-1.282.294-1.859m0 0a5 5 0 019.412 0M17 14v2m0 0c-.006-.514-.074-.997-.202-1.458M7 14v2m0 0c-.006-.514-.074-.997-.202-1.458M12 10a4 4 0 110-8 4 4 0 010 8z"></path></svg>
-      <span>Kullanıcılar</span>
+    <a routerLink="/admin/users" routerLinkActive="bg-orange-600 text-white" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
+      <!-- Kullanıcılar bağlantısı:
+           - routerLink="/users": Tıklandığında '/users' yoluna yönlendirir.
+           - routerLinkActive="bg-orange-600 text-white": Bağlantı aktifse belirtilen CSS sınıflarını uygular.
+           - class: Esnek düzen, hizalama, iç boşluk, yuvarlatılmış köşeler, metin rengi ve hover efektleri. -->
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.102-1.282-.294-1.859M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.102-1.282.294-1.859m0 0a5 5 0 019.412 0M17 14v2m0 0c-.006-.514-.074-.997-.202-1.458M7 14v2m0 0c-.006-.514-.074-.997-.202-1.458M12 10a4 4 0 110-8 4 4 0 010 8z"></path></svg> <!-- Kullanıcılar ikonu -->
+      <span>Users</span> <!-- Bağlantı metni -->
     </a>
-    <a href="#" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v2m-2-4v4m0 0l2-2m-2 2l-2-2m7-8v4m0 0l2-2m-2 2l-2-2"></path></svg>
-      <span>Raporlar</span>
-    </a>
-    <a href="#" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.525.176 1.04-.047 1.487-.572L10.325 4.317z"></path></svg>
-      <span>Ayarlar</span>
+     <a routerLink="/admin/roles" routerLinkActive="bg-orange-600 text-white" class="flex items-center space-x-3 p-3 rounded-md text-orange-200 hover:bg-orange-600 hover:text-white transition duration-300">
+      <!-- Yeni Roller bağlantısı -->
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+      </svg>
+      <span>Roles</span>
     </a>
   </nav>
 </aside>
